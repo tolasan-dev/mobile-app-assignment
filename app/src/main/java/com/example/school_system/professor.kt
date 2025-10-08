@@ -1,5 +1,6 @@
 package com.example.school_system
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -24,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.school_system.ui.theme.SchoolsystemTheme // Assuming your theme file path
+
 
 // Define the dark red color used in the buttons/borders (0xFF8B0000)
 val DarkRed = Color(0xFF8B0000)
@@ -35,11 +38,7 @@ class ProfessorLoginActivity : ComponentActivity() {
             SchoolsystemTheme {
                 ProfessorLoginScreen(
                     // TODO: Replace with actual navigation logic (e.g., using a NavController)
-                    onBackClicked = { finish() },
-                    onLoginClicked = { email, password ->
-                        // TODO: Implement actual login logic here
-                        println("Professor Login attempt: $email / $password")
-                    }
+                    onBackClicked = { finish() }
                 )
             }
         }
@@ -48,8 +47,7 @@ class ProfessorLoginActivity : ComponentActivity() {
 
 @Composable
 fun ProfessorLoginScreen(
-    onBackClicked: () -> Unit,
-    onLoginClicked: (String, String) -> Unit
+    onBackClicked: () -> Unit
 ) {
     // State for input fields
     var email by remember { mutableStateOf("") }
@@ -63,7 +61,7 @@ fun ProfessorLoginScreen(
         unfocusedContainerColor = Color.White,
         cursorColor = DarkRed
     )
-
+    val context = LocalContext.current
     Box(modifier = Modifier.fillMaxSize()) {
         // 1. Background Image (Top Section)
         // NOTE: The image in the design is only visible at the very top.
@@ -161,7 +159,10 @@ fun ProfessorLoginScreen(
 
             // Log In Button
             Button(
-                onClick = { onLoginClicked(email, password) },
+                onClick = {
+                    // NAVIGATE TO PROFESSOR LOGIN ACTIVITY
+                    context.startActivity(Intent(context, MainProfessorActivity::class.java))
+                },
                 colors = ButtonDefaults.buttonColors(containerColor = DarkRed),
                 shape = RoundedCornerShape(30.dp),
                 modifier = Modifier
@@ -184,8 +185,7 @@ fun ProfessorLoginScreen(
 fun ProfessorLoginScreenPreview() {
     SchoolsystemTheme {
         ProfessorLoginScreen(
-            onBackClicked = {},
-            onLoginClicked = { _, _ -> }
+            onBackClicked = {}
         )
     }
 }
