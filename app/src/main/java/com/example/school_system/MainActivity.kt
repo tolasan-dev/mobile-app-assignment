@@ -25,6 +25,7 @@ import com.example.school_system.ui.theme.SchoolsystemTheme
 import android.content.Intent
 import androidx.compose.ui.platform.LocalContext
 import android.widget.Toast
+import androidx.compose.foundation.magnifier
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,13 +63,14 @@ fun UniversityIntroScreen() {
                 painter = painterResource(id = R.drawable.rupp_logo),
                 contentDescription = "University Logo",
                 modifier = Modifier
-                    .size(120.dp)
-                    .padding(bottom = 16.dp)
+                    .size(250.dp)
+                    .padding(bottom = 10.dp,
+                        top = 80.dp)
             )
 
             Text(
                 text = "សាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ",
-                fontSize = 18.sp,
+                fontSize = 30.sp,
                 color = Color.Black,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 4.dp)
@@ -76,7 +78,7 @@ fun UniversityIntroScreen() {
 
             Text(
                 text = "ROYAL UNIVERSITY OF PHNOM PENH",
-                fontSize = 14.sp,
+                fontSize = 17.sp,
                 color = Color.Black,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 60.dp)

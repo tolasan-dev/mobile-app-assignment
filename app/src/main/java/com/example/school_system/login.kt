@@ -55,7 +55,7 @@ fun LoginAsScreen() {
             onClick = {},
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .padding(16.dp)
+                .padding(top = 40.dp, start = 20.dp)
         ) {
             Icon(
                 // You should ensure R.drawable.ic_back exists or use a Material icon
