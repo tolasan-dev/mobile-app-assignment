@@ -52,7 +52,7 @@ fun HomeworkScreen() {
                 navigationIcon = {
                     IconButton(onClick = { (context as? ComponentActivity)?.finish() }) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_arrow_back),
+                            painter = painterResource(id = R.drawable.ic_back),
                             contentDescription = "Back"
                         )
                     }

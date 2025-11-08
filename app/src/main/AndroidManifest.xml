@@ -10,9 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Schoolsystem">
         <activity android:name=".ExamScreen" android:exported="false" />
-        <activity android:name=".HomeworkScreen" android:exported="false" />
-<!--        <activity android:name=".ScheduleScreen" android:exported="false" />-->
-<!--        <activity android:name=".AttendanceScreen" android:exported="false" />-->
+        <activity android:name=".HomeworkActivity" android:exported="false" />
+        <activity android:name=".ScheduleActivity" android:exported="false" />
+        <activity android:name=".AttendanceActivity" android:exported="false" />
 
         <!-- ✅ Added -->
         <activity

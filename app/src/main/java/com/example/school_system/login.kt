@@ -44,7 +44,7 @@ fun LoginAsScreen() {
     Box(modifier = Modifier.fillMaxSize()) {
         // Background image
         Image(
-            painter = painterResource(id = R.drawable.bg_university),
+            painter = painterResource(id = R.drawable.rupp_bg),
             contentDescription = "Background",
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
@@ -55,7 +55,7 @@ fun LoginAsScreen() {
             onClick = {},
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .padding(top = 40.dp, start = 20.dp)
+                .padding(top = 40.dp, start = 10.dp)
         ) {
             Icon(
                 // You should ensure R.drawable.ic_back exists or use a Material icon

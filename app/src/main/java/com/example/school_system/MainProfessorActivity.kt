@@ -1,5 +1,6 @@
 package com.example.school_system
 
+//import android.R
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -23,12 +24,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.school_system.ui.theme.SchoolsystemTheme
 //import kotlinx.coroutines.launch
+import androidx.compose.foundation.Image
+import androidx.compose.ui.layout.ContentScale
 
 val primary: Color = Color(0xFF8B0000)
 val ExamCardColor = Color(0xFFD4E6F1)
@@ -36,6 +40,7 @@ val HomeworkCardColor = Color(0xFF85C1E9)
 val ScheduleCardColor = Color(0xFFF7DC6F)
 val AttendanceCardColor = Color(0xFFE5E7E9)
 
+@ExperimentalMaterial3Api
 class MainProfessorActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +50,8 @@ class MainProfessorActivity : ComponentActivity() {
                     when (target) {
                         "Exam" -> startActivity(Intent(this, ExamScreen::class.java))
                         "Homework" -> startActivity(Intent(this, HomeworkActivity::class.java))
-//                        "Schedule" -> startActivity(Intent(this, ScheduleScreen::class.java))
-//                        "Attendance" -> startActivity(Intent(this, AttendanceScreen::class.java))
+                        "Schedule" -> startActivity(Intent(this, ScheduleActivity::class.java))
+                        "Attendance" -> startActivity(Intent(this, AttendanceActivity::class.java))
                     }
                 })
             }
@@ -79,11 +84,16 @@ fun ProfessorTopBar() {
         modifier = Modifier
             .fillMaxWidth()
             .background(primary)
-            .padding(16.dp),
+            .padding(top = 40.dp, start = 20.dp, end = 20.dp, bottom = 20.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Icon(Icons.Default.Menu, contentDescription = "Menu", tint = Color.White, modifier = Modifier.size(28.dp))
+        Icon(
+            Icons.Default.Menu,
+            contentDescription = "Menu",
+            tint = Color.White,
+            modifier = Modifier.size(28.dp)
+        )
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             Icon(Icons.Default.Notifications, contentDescription = "Notifications", tint = Color.White)
             Icon(Icons.Default.Settings, contentDescription = "Settings", tint = Color.White)
@@ -91,9 +101,18 @@ fun ProfessorTopBar() {
                 modifier = Modifier
                     .size(28.dp)
                     .clip(CircleShape)
-                    .background(Color.White)
-                    .clickable { /* profile click */ }
-            )
+                    .clickable {
+//                        navController.navigate("HomeWorkScreen")
+                    }
+            ){
+                // THIS IS HOW YOU ADD THE IMAGE
+                Image(
+                    painter = painterResource(id = R.drawable.profile),
+                    contentDescription = "User Avatar",
+                    contentScale = ContentScale.Crop, // Crucial to make sure the image fills the circle neatly
+                    modifier = Modifier.fillMaxSize() // Image takes up the whole Box size
+                )
+            }
         }
     }
 }
@@ -121,12 +140,20 @@ fun ProfessorWelcomeHeader() {
                 modifier = Modifier
                     .size(64.dp)
                     .clip(RoundedCornerShape(32.dp))
-                    .background(Color.LightGray)
             )
+            {
+                // THIS IS HOW YOU ADD THE IMAGE
+                Image(
+                    painter = painterResource(id = R.drawable.profile),
+                    contentDescription = "User Avatar",
+                    contentScale = ContentScale.Crop, // Crucial to make sure the image fills the circle neatly
+                    modifier = Modifier.fillMaxSize() // Image takes up the whole Box size
+                )
+            }
             Spacer(modifier = Modifier.width(16.dp))
             Column {
                 Text("Welcome.", fontSize = 16.sp, color = Color.Gray)
-                Text("Tea. Kdam Prai", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text("Tea.Lamin Yamal", fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 Text("Mobile App", fontSize = 14.sp, color = Color.Gray)
             }
         }

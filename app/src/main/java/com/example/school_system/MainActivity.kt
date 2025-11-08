@@ -46,7 +46,7 @@ fun UniversityIntroScreen() {
         modifier = Modifier.fillMaxSize()
     ) {
         Image(
-            painter = painterResource(id = R.drawable.bg_university),
+            painter = painterResource(id = R.drawable.rupp_bg),
             contentDescription = "Background",
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()

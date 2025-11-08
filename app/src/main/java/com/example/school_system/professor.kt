@@ -68,12 +68,11 @@ fun ProfessorLoginScreen(
         // We use the same resource ID for consistency.
         Image(
             // Replace R.drawable.bg_university with your actual resource ID
-            painter = painterResource(id = R.drawable.bg_university),
+            painter = painterResource(id = R.drawable.rupp_bg),
             contentDescription = "University Building",
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.3f) // Occupy top 30% of the height
                 .align(Alignment.TopCenter)
         )
 
@@ -82,7 +81,7 @@ fun ProfessorLoginScreen(
             onClick = onBackClicked,
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .padding(16.dp)
+                .padding(top = 40.dp, start = 20.dp)
                 .background(Color.White.copy(alpha = 0.5f), RoundedCornerShape(50))
                 .size(40.dp)
         ) {
@@ -117,7 +116,7 @@ fun ProfessorLoginScreen(
             // Email Input Field
             Text(
                 text = "Input Your Email",
-                fontSize = 14.sp,
+                fontSize = 16.sp,
                 color = Color.Black,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier.padding(bottom = 8.dp)
@@ -125,20 +124,19 @@ fun ProfessorLoginScreen(
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                label = { Text("Username") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 shape = RoundedCornerShape(30.dp),
                 colors = customTextFieldColors,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp)
+                    .height(70.dp)
                     .padding(bottom = 24.dp)
             )
 
             // Password Input Field
             Text(
                 text = "Input Your Password",
-                fontSize = 14.sp,
+                fontSize = 16.sp,
                 color = Color.Black,
                 fontWeight = FontWeight.Medium,
                 modifier = Modifier.padding(bottom = 8.dp)
@@ -146,15 +144,14 @@ fun ProfessorLoginScreen(
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Password") },
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                shape = RoundedCornerShape(30.dp),
+                shape = RoundedCornerShape(40.dp),
                 colors = customTextFieldColors,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(56.dp)
-                    .padding(bottom = 40.dp)
+                    .height(70.dp)
+                    .padding(bottom = 24.dp)
             )
 
             // Log In Button
