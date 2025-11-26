@@ -40,10 +40,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SchoolsystemTheme {
-//                UniversityIntroScreen()
+                UniversityIntroScreen()
 //                HomeworkStatusScreen()
 //                ProfileActivity()
-                StudentLoginActivity()
+//                StudentLoginActivity()
             }
         }
     }

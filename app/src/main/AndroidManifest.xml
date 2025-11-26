@@ -13,8 +13,11 @@
         <activity android:name=".HomeworkActivity" android:exported="false" />
         <activity android:name=".ScheduleActivity" android:exported="false" />
         <activity android:name=".AttendanceActivity" android:exported="false" />
-        <activity android:name=".HomeworkStatusActivity" />
+<!--        <activity android:name=".HomeworkStatusActivity" />-->
         <activity android:name=".StudentLoginActivity" />
+        <activity android:name=".ProfileActivity" android:exported="false" />
+        <activity android:name=".DashboardActivity" android:exported="false" />
+        <activity android:name=".CalendarActivity" android:exported="false" />
         <!-- ✅ Added -->
         <activity
             android:name=".LoginActivity"

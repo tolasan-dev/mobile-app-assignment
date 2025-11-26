@@ -1,5 +1,6 @@
     package com.example.school_system
 
+    import android.content.Intent
     import android.os.Bundle
     import androidx.activity.ComponentActivity
     import androidx.activity.compose.setContent
@@ -39,6 +40,7 @@
     import androidx.compose.ui.text.input.PasswordVisualTransformation
     import androidx.compose.ui.unit.dp
     import com.example.school_system.ui.theme.SchoolsystemTheme
+    import androidx.compose.ui.platform.LocalContext
 
     @OptIn(ExperimentalMaterial3Api::class)
     class StudentLoginActivity : ComponentActivity() {
@@ -63,7 +65,7 @@
         onBack: () -> Unit = {},
         onLogin: (String, String) -> Unit = { _, _ -> }
     ) {
-
+        var context = LocalContext.current
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
 
@@ -142,7 +144,10 @@
                 Spacer(modifier = Modifier.height(30.dp))
 
                 Button(
-                    onClick = { onLogin(email, password) },
+                    onClick = {
+
+                        context.startActivity(Intent(context, DashboardActivity::class.java))
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
