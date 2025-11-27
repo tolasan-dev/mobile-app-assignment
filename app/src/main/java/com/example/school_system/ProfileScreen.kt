@@ -1,6 +1,7 @@
 package com.example.school_system
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -176,7 +177,9 @@ fun ProfileScreen(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Button(
-                    onClick = onEditProfile,
+                    onClick = {
+                        context.startActivity(Intent(context, EditProfileActivity::class.java))
+                    },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8B0000)),
                     shape = RoundedCornerShape(24.dp),
                     modifier = Modifier

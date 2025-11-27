@@ -1,5 +1,6 @@
 package com.example.school_system
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -34,6 +35,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -46,7 +49,9 @@ class CalendarActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SchoolsystemTheme {
-                CalendarScreen()
+                CalendarScreen(
+                    onBack = { finish() }
+                )
             }
         }
     }
@@ -54,7 +59,7 @@ class CalendarActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CalendarScreen() {
+fun CalendarScreen(onBack: () -> Unit) {
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -62,9 +67,21 @@ fun CalendarScreen() {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            DrawerMenu {}
+            DrawerMenu(
+                onSelect = { item ->
+                    // Handle all drawer selections here
+                    when (item) {
+                        "Dashboard" -> {}
+                        "Teacher" -> {}
+                        "Calendar" -> {}
+                        "Schedule" -> {}
+                        "LogOut" -> {}
+                    }
+                }
+            )
         }
     ) {
+
         Column(modifier = Modifier.fillMaxSize()) {
 
             CalendarTopBar(
@@ -76,9 +93,9 @@ fun CalendarScreen() {
     }
 }
 
-/* -------------------------------------------------------------------------- */
-/*                                   TOP BAR                                  */
-/* -------------------------------------------------------------------------- */
+/* --------------------------------------------------------- */
+/*                          TOP BAR                          */
+/* --------------------------------------------------------- */
 
 @Composable
 fun CalendarTopBar(onMenuClick: () -> Unit) {
@@ -95,7 +112,9 @@ fun CalendarTopBar(onMenuClick: () -> Unit) {
             Icons.Default.Menu,
             contentDescription = "Menu",
             tint = Color.White,
-            modifier = Modifier.clickable { onMenuClick() }
+            modifier = Modifier
+                .size(28.dp)
+                .clickable { onMenuClick() }
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -108,21 +127,27 @@ fun CalendarTopBar(onMenuClick: () -> Unit) {
 
         Spacer(modifier = Modifier.width(16.dp))
 
+        val context = LocalContext.current
         Image(
             painter = painterResource(id = R.drawable.profile),
-            contentDescription = null,
+            contentDescription = "Profile",
+            contentScale = ContentScale.Crop,
             modifier = Modifier
-                .size(32.dp)
+                .size(36.dp)
                 .clip(CircleShape)
-                .background(Color.White)
-                .padding(4.dp)
+                .clickable {
+                    // Navigate to ProfileActivityStu
+                    context.startActivity(
+                        Intent(context, ProfileActivityStu::class.java)
+                    )
+                }
         )
     }
 }
 
-/* -------------------------------------------------------------------------- */
-/*                         STATIC CALENDAR UI (NO LOGIC)                      */
-/* -------------------------------------------------------------------------- */
+/* --------------------------------------------------------- */
+/*                       STATIC CALENDAR UI                  */
+/* --------------------------------------------------------- */
 
 @Composable
 fun StaticCalendarUI() {
@@ -135,13 +160,11 @@ fun StaticCalendarUI() {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        // MONTH TITLE
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-
             Text("<", fontSize = 20.sp)
             Text(
                 "OCTOBER 2025",
@@ -153,7 +176,6 @@ fun StaticCalendarUI() {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // WEEK LABELS
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
@@ -165,155 +187,98 @@ fun StaticCalendarUI() {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // STATIC CALENDAR GRID (HARDCODED)
         val weekRows = listOf(
-            listOf("",  "",  "",  "1", "2", "3", "4"),
+            listOf("", "", "", "1", "2", "3", "4"),
             listOf("5", "6", "7", "8", "9", "10", "11"),
             listOf("12", "13", "14", "15", "16", "17", "18"),
             listOf("19", "20", "21", "22", "23", "24", "25"),
             listOf("26", "27", "28", "29", "30", "31", "1")
         )
 
-        weekRows.forEach { row ->
+        weekRows.forEach { week ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-                row.forEach { day ->
+                week.forEach { day ->
                     StaticCalendarDay(day)
                 }
             }
             Spacer(modifier = Modifier.height(12.dp))
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
-        // EVENTS SECTION
         StaticCalendarEvents()
     }
 }
 
-/* -------------------------------------------------------------------------- */
-/*                         STATIC CALENDAR DAY UI                             */
-/* -------------------------------------------------------------------------- */
+/* --------------------------------------------------------- */
+/*                     SINGLE CALENDAR DAY                   */
+/* --------------------------------------------------------- */
 
 @Composable
 fun StaticCalendarDay(day: String) {
 
-    // COLORS BASED ON SPECIAL DAYS
-    val bg = when (day) {
-        "20" -> Color(0xFF19C300)  // green
-        "8", "23" -> Color(0xFF8B0000) // red
-        "4", "11", "18", "25" -> Color(0xFFE0EAFF) // Sunday blue
+    val backgroundColor = when (day) {
+        "20" -> Color(0xFF19C300) // Green
+        "8", "23" -> Color(0xFF8B0000) // Red
+        "4", "11", "18", "25" -> Color(0xFFE0EAFF) // Sunday Blue
         else -> Color.Transparent
     }
 
     Box(
         modifier = Modifier
             .size(40.dp)
-            .clip(RoundedCornerShape(12.dp))
-            .background(bg),
+            .clip(RoundedCornerShape(10.dp))
+            .background(backgroundColor),
         contentAlignment = Alignment.Center
     ) {
+
         if (day.isNotEmpty()) {
             Text(
                 text = day,
-                color = if (bg != Color.Transparent && bg != Color(0xFFE0EAFF)) Color.White else Color.Black,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color =
+                    if (backgroundColor == Color.Transparent || backgroundColor == Color(0xFFE0EAFF))
+                        Color.Black else Color.White
             )
         }
     }
 }
 
-/* -------------------------------------------------------------------------- */
-/*                              EVENTS SECTION                                */
-/* -------------------------------------------------------------------------- */
+/* --------------------------------------------------------- */
+/*                         EVENTS BOXES                       */
+/* --------------------------------------------------------- */
 
 @Composable
 fun StaticCalendarEvents() {
 
-    // GREEN EVENT BOX
+    // GREEN BOX
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 6.dp)
             .clip(RoundedCornerShape(12.dp))
             .background(Color(0xFF00CC55))
             .padding(12.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text("Festival & Holidays", fontWeight = FontWeight.Bold, color = Color.White)
+        Text("Festival & Holidays", color = Color.White, fontWeight = FontWeight.Bold)
         Text("01", color = Color.White, fontWeight = FontWeight.Bold)
     }
 
-    // RED EVENT BOX
+    Spacer(modifier = Modifier.height(12.dp))
+
+    // RED BOX
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 6.dp)
             .clip(RoundedCornerShape(12.dp))
             .background(Color(0xFFB20000))
             .padding(12.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text("Absent", fontWeight = FontWeight.Bold, color = Color.White)
+        Text("Absent", color = Color.White, fontWeight = FontWeight.Bold)
         Text("02", color = Color.White, fontWeight = FontWeight.Bold)
-    }
-}
-
-/* -------------------------------------------------------------------------- */
-/*                                 DRAWER                                     */
-/* -------------------------------------------------------------------------- */
-
-//@Composable
-//fun DrawerMenu(onSelect: (String) -> Unit) {
-//
-//    Column(
-//        modifier = Modifier
-//            .fillMaxHeight()
-//            .width(270.dp)
-//            .background(Color(0xFF8B0000))
-//            .padding(16.dp),
-//        verticalArrangement = Arrangement.SpaceBetween
-//    ) {
-//
-//        Column {
-//            DrawerItem("Dashboard", R.drawable.ic_dashboard)
-//            DrawerItem("Teacher", R.drawable.ic_teacher)
-//            DrawerItem("Calendar", R.drawable.ic_calendar)
-//            DrawerItem("Schedule", R.drawable.ic_schedule)
-//        }
-//
-//        DrawerItem("Log Out", R.drawable.ic_logout, isLogout = true)
-//    }
-//}
-
-@Composable
-fun DrawerItem(
-    title: String,
-    icon: Int,
-    isLogout: Boolean = false
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-            .clip(RoundedCornerShape(40.dp))
-            .background(if (isLogout) Color(0xFFFDECEC) else Color.White)
-            .padding(14.dp)
-            .clickable { }
-    ) {
-        Icon(
-            painterResource(id = icon),
-            contentDescription = title,
-            tint = if (isLogout) Color.Red else Color.Black
-        )
-        Spacer(modifier = Modifier.width(16.dp))
-        Text(
-            text = title,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
-            color = if (isLogout) Color.Red else Color.Black
-        )
     }
 }

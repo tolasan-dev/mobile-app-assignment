@@ -44,6 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -51,6 +52,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.school_system.ui.theme.SchoolsystemTheme
 import kotlinx.coroutines.launch
+//import android.content.Intent
+//import androidx.compose.ui.platform.LocalContext
 
 class DashboardActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -141,9 +144,9 @@ fun DrawerMenu(onSelect: (String) -> Unit = {}) {
                 context.startActivity(Intent(context, CalendarActivity::class.java))
             }
 
-//            DrawerItem("Schedule", R.drawable.ic_schedule) {
-//                context.startActivity(Intent(context, ScheduleActivity::class.java))
-//            }
+            DrawerItem("Schedule", R.drawable.ic_schedule) {
+                context.startActivity(Intent(context, ScheduleActivityStu::class.java))
+            }
         }
 
         DrawerItem("Log Out", R.drawable.ic_logout, isLogout = true) {
@@ -219,15 +222,20 @@ fun DashboardTopBar(onMenuClick: () -> Unit) {
         )
 
         Spacer(modifier = Modifier.width(16.dp))
-
+        val context = LocalContext.current
         Image(
             painter = painterResource(id = R.drawable.profile),
-            contentDescription = null,
+            contentDescription = "Profile",
+            contentScale = ContentScale.Crop,
             modifier = Modifier
-                .size(32.dp)
+                .size(36.dp)
                 .clip(CircleShape)
-                .background(Color.White)
-                .padding(4.dp)
+                .clickable {
+                    // Navigate to ProfileActivityStu
+                    context.startActivity(
+                        Intent(context, ProfileActivityStu::class.java)
+                    )
+                }
         )
     }
 }
